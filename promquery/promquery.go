@@ -15,7 +15,6 @@ type Config struct {
 	PromAPI string
 }
 
-
 // Service structure
 type Service struct {
 	config *Config
@@ -52,12 +51,12 @@ func (r *Service) Query(ctx context.Context, query string) (map[string]interface
 	}
 
 	var res []map[string]interface{}
-	result_, err := json.Marshal(resp)
+	result, err := json.Marshal(resp)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := json.Unmarshal(result_, &res); err != nil {
+	if err := json.Unmarshal(result, &res); err != nil {
 		return nil, err
 	}
 
@@ -83,7 +82,7 @@ func convertResultToResponse(res []map[string]interface{}) map[string]interface{
 		}
 
 		metric := metricI.(map[string]interface{})
-		val, ok := metric["id"];
+		val, ok := metric["id"]
 		if ok {
 			response[val.(string)] = resObj
 

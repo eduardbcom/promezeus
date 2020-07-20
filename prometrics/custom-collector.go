@@ -12,7 +12,6 @@ type customCollector struct {
 }
 
 func newCustomCollector(
-	typo prometheus.ValueType,
 	name string,
 	description string,
 	labels Labels,
@@ -20,7 +19,7 @@ func newCustomCollector(
 ) *customCollector {
 	return &customCollector{
 		counterDesc: prometheus.NewDesc(name, description, nil, prometheus.Labels(labels)),
-		_typo:       typo,
+		_typo:       prometheus.GaugeType,
 		_getter:     getter,
 		_labels:     labels,
 	}

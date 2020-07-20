@@ -1,7 +1,7 @@
 # promezeus
 Abstraction around prometheus module
 
-## prometrics
+# prometrics
 
 ```go
 import (
@@ -17,18 +17,27 @@ if err != nil {
 // 9100 port is hardcoded.
 metricsServer.Listen()
 
-// ...
+// example with plain gauge
 
-prometrics.RegisterGauge(
-    // metric key used in order to identify unique gauge (can be blank though)
-    // (metricKey, metricName) must be a uniq pair in order to avoid collisions. 
-    "metricKey", 
-    prometrics.GaugeType,
-    // metric name is a string you will see within /metrics report
+prometrics.Register(
     "metricName",
+    []{"id"}
+     "Too long description for metricName",
+)
+prometrics.Inc("metricName", map[string]string{"id": "1"}
+
+# HELP metricName Too long description for metricName
+# TYPE metricName gauge
+metricName{id="1"} 1
+
+
+// example with collector
+
+prometrics.RegisterWithCollector(
+    "metricName",
+    map[string]string{"id": "1"},
     "Too long description for metricName",
     // labels (can be nil)
-    map[string]string{"id": "1"},
     func(labels prometrics.Labels) float64 { /* value gette */ return 1.0 }
 )
 
@@ -61,3 +70,7 @@ ctx := context.TODO()
 
 promQuery.Query(ctx, "metricName{id='1'}")
 ```
+
+# TODO:
+- add support for counter
+- unit/func tests
