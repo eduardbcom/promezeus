@@ -19,7 +19,7 @@ func newCustomCollector(
 ) *customCollector {
 	return &customCollector{
 		counterDesc: prometheus.NewDesc(name, description, nil, prometheus.Labels(labels)),
-		_typo:       prometheus.GaugeType,
+		_typo:       prometheus.GaugeValue,
 		_getter:     getter,
 		_labels:     labels,
 	}
